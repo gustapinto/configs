@@ -8,4 +8,4 @@ sudo apt upgrade &&
 sudo snap refresh
 
 # Close terminal
-exit
+# exit
