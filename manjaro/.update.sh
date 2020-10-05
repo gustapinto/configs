@@ -1,5 +1,5 @@
-#! /bin/bash
+#!/bin/bash
 
 #atualizar pc, sim, sou preguiçoso
-sudo pacman -Syu
+sudo pacman -Syyu --noconfirm
 yay -Syyu --noconfirm
