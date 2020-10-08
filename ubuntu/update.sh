@@ -7,5 +7,5 @@ sudo apt upgrade &&
 # Update snap based apps
 sudo snap refresh
 
-# Close terminal
-# exit
+# Clear the necessary cache
+source ./.clear_cache.sh
