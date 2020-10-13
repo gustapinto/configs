@@ -7,4 +7,4 @@ sudo apt install docker docker-compose
 sudo usermod -aG docker $USER && newgrp docker
 
 # Update system
-source ./.update.sh
+source ./update.sh

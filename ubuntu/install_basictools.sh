@@ -13,4 +13,4 @@ sudo apt install flameshot
 source ./.docker.sh
 
 # Update system
-source ./.update.sh
+source ./update.sh
