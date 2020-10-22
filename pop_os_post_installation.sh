@@ -32,3 +32,6 @@ sudo apt remove --purge geary -y
 sudo apt autoclean -y
 sudo apt autoremove -y
 flatpak uninstall --unused -y
+
+# Enable firewall
+sudo ufw enable
