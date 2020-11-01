@@ -14,7 +14,7 @@ sudo update-grub
 sudo apt install docker docker-compose -y
 
 # Install flatpak based apps and crete aliases for them
-flatpak install flathub org.vim.Vim com.visualstudio.code flathub com.discordapp.Discord com.spotify.Client org.libreoffice.LibreOffice org.videolan.VLC io.dbeaver.DBeaverCommunity -y
+flatpak install flathub org.vim.Vim com.visualstudio.code com.discordapp.Discord com.spotify.Client org.libreoffice.LibreOffice io.dbeaver.DBeaverCommunity -y
 
 echo "alias code='flatpak run com.visualstudio.code'" >> ~/.bashrc
 echo "alias vim='flatpak run org.vim.Vim'" >> ~/.bashrc
