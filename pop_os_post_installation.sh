@@ -38,3 +38,6 @@ sudo ufw enable
 
 # Configure git to use flatpak vim as editor
 git config --global core.editor "flatpak run org.vim.Vim"
+
+# To enable Wayland compositor comment the WaylandEnable=false line
+sudo nano /etc/gdm3/custom.conf
