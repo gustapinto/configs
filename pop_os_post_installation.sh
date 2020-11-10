@@ -16,8 +16,6 @@ sudo update-grub
 # Install flatpak based apps and crete aliases for them
 flatpak install flathub com.sublimetext.three com.discordapp.Discord com.spotify.Client org.libreoffice.LibreOffice io.dbeaver.DBeaverCommunity -y
 
-source ~/.bashrc
-
 # Manage apps users and permissions
 sudo usermod -aG docker $USER
 newgrp docker
