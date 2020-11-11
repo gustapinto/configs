@@ -9,7 +9,6 @@ flatpak update -y
 sudo apt install os-prober docker docker-compose -y
 
 # Check for another OS on system and active dual boot if necessary
-sudo apt install  -y
 sudo os-prober
 sudo update-grub
 
