@@ -6,14 +6,14 @@ sudo apt upgrade -y
 flatpak update -y
 
 # Install apt based apps
-sudo apt install os-prober docker docker-compose -y
+sudo apt install os-prober docker docker-compose code -y
 
 # Check for another OS on system and active dual boot if necessary
 sudo os-prober
 sudo update-grub
 
 # Install flatpak based apps and crete aliases for them
-flatpak install flathub com.sublimetext.three com.discordapp.Discord com.spotify.Client org.libreoffice.LibreOffice io.dbeaver.DBeaverCommunity -y
+flatpak install flathub com.discordapp.Discord com.spotify.Client org.libreoffice.LibreOffice io.dbeaver.DBeaverCommunity -y
 
 # Manage apps users and permissions
 sudo usermod -aG docker $USER
