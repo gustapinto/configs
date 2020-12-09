@@ -6,7 +6,7 @@ sudo apt upgrade -y
 flatpak update -y
 
 # Install apt based apps
-sudo apt install os-prober docker docker-compose code -y
+sudo apt install os-prober docker docker-compose code vim -y
 
 # Check for another OS on system and active dual boot if necessary
 sudo os-prober
