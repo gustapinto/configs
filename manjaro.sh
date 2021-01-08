@@ -6,18 +6,14 @@ echo "NON TESTED SCRIPT PLS EDIT IT AFTER TEST AND REMOVE THIS ECHO"
 sudo pacman -Syyu --noconfirm
 
 # Install pacman based apps
-sudo pacman -S docker docker-compose flameshot --noconfirm
+sudo pacman -S vim docker docker-compose --noconfirm
 
 # Enable flatpak
-sudo pacman -S flatpak
+sudo pacman -S flatpak --noconfirm
 flatpak update -y
 
 # Install flatpak based apps and crete aliases for them
-flatpak install flathub org.vim.Vim com.visualstudio.code com.discordapp.Discord com.spotify.Client org.libreoffice.LibreOffice io.dbeaver.DBeaverCommunity -y
-
-echo "alias code='flatpak run com.visualstudio.code'" >> ~/.bashrc
-echo "alias vim='flatpak run org.vim.Vim'" >> ~/.bashrc
-source ~/.bashrc
+flatpak install flathub com.discordapp.Discord com.spotify.Client org.libreoffice.LibreOffice io.dbeaver.DBeaverCommunity -y
 
 # Manage apps users and permissions
 sudo usermod -aG docker $USER
@@ -29,6 +25,3 @@ flatpak uninstall --unused -y
 
 # Enable firewall
 sudo ufw enable
-
-# Configure git to use flatpak vim as editor
-git config --global core.editor "flatpak run org.vim.Vim"
