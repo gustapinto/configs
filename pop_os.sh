@@ -3,13 +3,11 @@
 echo "Seting up system for? [P]ersonal | [W]ork?"
 read ENVIROMENT
 
-echo "Set up dual boot? [Y]es | [No]"
-read ENABLE_DUAL_BOOT_INPUT
-
-# Check for the desired enviroment and set app lists
+# Check for tehe desired enviroment and set app lists
 case $ENVIROMENT in
     P | p | Personal | personal)
-        echo -n "Setting up system for personal use"
+        echo "Setting up system for personal use ..."
+        echo ""
 
         APT_APPS=(
             code
@@ -24,7 +22,8 @@ case $ENVIROMENT in
         ;;
 
     W | w | Work | work)
-        echo -n "Setting up system for work use";
+        echo "Setting up system for work use ...";
+        echo ""
 
         APT_APPS=(
             code
@@ -43,82 +42,93 @@ case $ENVIROMENT in
         ;;
 
     *)
-        echo "Invalid input try again please"
-        exit N
+        echo "Invalid input try again please."
+
+        INVALID_INPUT_ERROR=true
+
+        return
         ;;
 esac
 
-# Check for the desired enviroment and set dual boot boolean
-case $ENABLE_DUAL_BOOT_INPUT in
+echo "Set up multi boot? [Y]es | [No]"
+read ENABLE_MULTI_BOOT_INPUT
+
+# Check and set the multi boot option
+case $ENABLE_MULTI_BOOT_INPUT in
     Y | y | Yes | yes)
-        echo -n " with dual boot."
+        echo " Setting up system with multi boot ..."
         echo ""
 
-        ENABLE_DUAL_BOOT=true
+        ENABLE_MULTI_BOOT=true
         ;;
 
     N | n | No | no)
-        echo -n " without dual boot."
+        echo "Setting up system with single boot ..."
         echo ""
 
-        ENABLE_DUAL_BOOT=false
+        ENABLE_MULTI_BOOT=false
         ;;
 
     *)
-        echo "Invalid input try again please"
+        echo "Invalid input try again please."
 
-        exit N
+        INVALID_INPUT_ERROR=true
+
+        return
         ;;
 esac
 
-# Update system
-sudo apt update -y
-sudo apt upgrade -y
-flatpak update -y
+if [ "$INVALID_INPUT_ERROR" = false ]; then
+    # Update system
+    sudo apt update -y
+    sudo apt upgrade -y
+    flatpak update -y
 
-# Install apt based apps
-for apt_app in ${APT_APPS[@]}; do
-    if ! dpkg -l | grep -q $apt_app; then
-        sudo apt install "$apt_app" -y
-    else
-        echo "[Already installed] - $apt_app"
+    # Install apt based apps
+    for apt_app in ${APT_APPS[@]}; do
+        if ! dpkg -l | grep -q $apt_app; then
+            sudo apt install "$apt_app" -y
+
+            if [ "$apt_app" == "docker" ]; then
+                # Create user and group for docker
+                sudo usermod -aG docker $USER
+
+                newgrp docker
+            fi
+        else
+            echo "[Already installed] - $apt_app"
+        fi
+    done
+
+    # Install flatpak based apps
+    for flatpak_app in ${FLATPAK_APPS[@]}; do
+        if ! dpkg -l | grep -q $flatpak_app; then
+            flatpak install flathub "$flatpak_app" -y
+        else
+            echo "[Already installed] - $flatpak_app"
+        fi
+    done
+
+    # Active multi boot
+    if [ "$ENABLE_MULTI_BOOT" = true ]; then
+        if ! dpkg -l | grep -q os-prober; then
+            flatpak install apt os-prober -y
+        fi
+
+        sudo os-prober
+
+        sudo update-grub
+
+        # Fix datetime errors on windows and unix on multi boot
+        timedatectl set-local-rtc 1 --adjust-system-clock
     fi
-done
 
-# Install flatpak based apps
-for flatpak_app in ${FLATPAK_APPS[@]}; do
-    if ! dpkg -l | grep -q $flatpak_app; then
-        flatpak install flathub "$flatpak_app" -y
-    else
-        echo "[Already installed] - $flatpak_app"
-    fi
-done
+    # Remove unnecessary dependencies
+    sudo apt autoclean -y
+    sudo apt autoremove -y
 
-# Create user and group for docker
-if dpkg -l | grep -q docker -a dpkg -l | grep -q docker-compose; then
-    sudo usermod -aG docker $USER
+    flatpak uninstall --unused -y
 
-    newgrp docker
+    # Enable firewall
+    sudo ufw enable
 fi
-
-# Active dual boot
-if [ $ENABLE_DUAL_BOOT = true ]; then
-    if ! dpkg -l | grep -q os-prober; then
-        flatpak install apt os-prober -y
-    fi
-
-    sudo os-prober
-
-    sudo update-grub
-fi
-
-# Remove unnecessary dependencies
-sudo apt autoclean -y
-sudo apt autoremove -y
-
-flatpak uninstall --unused -y
-
-# Enable firewall
-sudo ufw enable
-
-exit 0
