@@ -12,14 +12,13 @@ case $ENVIROMENT in
         echo -n "Setting up system for personal use"
 
         APT_APPS=(
-            code
+            codium
             docker
             docker-compose
         )
 
         FLATPAK_APPS=(
             com.spotify.Client
-            io.dbeaver.DBeaverCommunity
         )
         ;;
 
@@ -27,7 +26,7 @@ case $ENVIROMENT in
         echo -n "Setting up system for work use";
 
         APT_APPS=(
-            code
+            codium
             docker
             docker-compose
             vim
