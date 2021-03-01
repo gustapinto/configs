@@ -10,13 +10,15 @@ case $ENVIROMENT in
         echo ""
 
         APT_APPS=(
-            codium
+            code
             docker
             docker-compose
         )
 
         FLATPAK_APPS=(
             com.spotify.Client
+            org.mozilla.firefox
+            net.cozic.joplin_desktop
         )
         ;;
 
@@ -25,7 +27,7 @@ case $ENVIROMENT in
         echo ""
 
         APT_APPS=(
-            codium
+            code
             docker
             docker-compose
             vim
@@ -37,6 +39,8 @@ case $ENVIROMENT in
             io.dbeaver.DBeaverCommunity
             com.discordapp.Discord
             com.getpostman.Postman
+            org.mozilla.firefox
+            net.cozic.joplin_desktop
         )
         ;;
 
@@ -88,7 +92,7 @@ if [ "$INVALID_INPUT_ERROR" = false ]; then
         if ! dpkg -l | grep -q $apt_app; then
             sudo apt install "$apt_app" -y
 
-            if [ "$apt_app" == "docker" ]; then
+            if [ "$apt_app" = "docker" ]; then
                 # Create user and group for docker
                 sudo usermod -aG docker $USER
 
