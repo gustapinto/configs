@@ -11,17 +11,33 @@ sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.m
 # Enable Flathub repository
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+# Enable docker-ce repository
+sudo dnf install dnf-plugins-core
+
+sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
 # Update dnf cache and packages
 sudo dnf check-update -y
 sudo dnf upgrade -y
 
 # Install RPM based packages
-sudo dnf install steam code docker docker-compose gnome-tweaks -y
+sudo dnf install steam code gnome-tweaks -y
 
 # Install flatpak based packages
-flatpak install flathub md.obsidian.Obsidian com.spotify.Client -y
+flatpak install flathub md.obsidian.Obsidian -y
 
-# Enable docker groups
-sudo usermod -a -G docker $USER
+# Install docker-ce and docker-compose
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose -y
+
+sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"  # Set CGroup to version 1
+
+sudo systemctl start docker
+sudo systemctl enable docker
+
+sudo groupadd docker
+
+sudo gpasswd -a ${USER} docker
+
+sudo systemctl restart docker
 
 newgrp docker
