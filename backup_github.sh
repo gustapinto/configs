@@ -1,0 +1,17 @@
+REPOSITORIES_TO_DOWNLOAD=(
+    'gustapinto/b3-notifier'
+    'gustapinto/cptec-data-extractor'
+    'gustapinto/editors-config'
+    'gustapinto/fatec'
+    'gustapinto/gustapinto.github.io'
+    'gustapinto/jupyter-notebooks'
+    'gustapinto/post-installation-scripts'
+    'gustapinto/python-studies'
+    'gustapinto/vault_obsidian'
+    'projeto-ao/blog'
+    'projeto-ao/tcc'
+)
+
+for repository in ${REPOSITORIES_TO_DOWNLOAD[@]}; do
+    git clone "git@github.com:$repository"
+done
