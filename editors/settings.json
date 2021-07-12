@@ -1,0 +1,33 @@
+{
+    // Editor configs
+    "editor.renderWhitespace": "boundary",
+    "editor.rulers": [80],
+    "editor.smoothScrolling": true,
+    "editor.wordWrap": "on",
+    "files.trimTrailingWhitespace": true,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "files.insertFinalNewline": true,
+
+    // UI settings
+    "breadcrumbs.enabled": false,
+    "editor.minimap.enabled": false,
+
+    // Ignore a lot of useless notifcations
+    "extensions.ignoreRecommendations": true,
+    "workbench.startupEditor": "none",
+
+    // Language specific
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false,
+    },
+    "[php]": {
+        "editor.rulers": [80, 100, 120],
+    },
+    "[python]": {
+        "editor.rulers": [72, 79],
+    },
+}
+
