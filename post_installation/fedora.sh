@@ -9,7 +9,7 @@ sudo dnf install -y \
 sudo dnf install -y dnf-plugins-core
 sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
-sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf config-manager --set-enabled google-chrome
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 # Update dnf cache and packages
@@ -18,11 +18,10 @@ sudo dnf upgrade -y
 
 # Install RPM based packages
 sudo dnf install -y \
-    containerd.io \
-    docker-ce \
-    docker-ce-cli \
     docker-compose \
     gnome-tweaks \
+    google-chrome-stable \
+    moby-engine \
     sublime-text
 
 # Install flatpak based packages
@@ -32,6 +31,7 @@ flatpak install -y \
 # Remove Fedora bloat
 sudo dnf remove -y \
     cheese \
+    firefox \
     gnome-boxes \
     gnome-clocks \
     gnome-contacts \
@@ -46,12 +46,16 @@ sudo dnf remove -y \
 sudo dnf autoremove -y
 flatpak remove --unused -y
 
-# Set CGroup to version 1
-sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
-
-# Enable and set docker-ce permissions
-sudo systemctl start docker
+# Enable and set Docker permissions
+sudo systemctl enable docker
 sudo groupadd docker
-sudo gpasswd -a ${USER} docker
-sudo systemctl restart docker
-newgrp docker
+sudo usermod -aG docker $USER
+sudo systemctl reboot
+
+# Configure sublime text settings
+cp \
+    ../editors/Preferences.sublime-settings \
+    ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
+
+# Add aliases to .bashrc
+/bin/bash ./set_aliases.sh
