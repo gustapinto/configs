@@ -1,3 +1,7 @@
+# Add a bit of color
+alias ls="ls --color"
+alias grep="grep --color"
+
 # Utility aliases
 alias ll="ls -laF"
 alias la="ls -A"
