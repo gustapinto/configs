@@ -6,4 +6,4 @@ if [ -f ~/.bash_functions ]; then
     source ~/.bash_functions
 fi
 
-PS1="$ "
+PS1="~ "
