@@ -1,5 +1,11 @@
 #!bin/bash
 
+# Speed up dnf
+dnf_conf_path='/etc/dnf/dnf.conf'
+
+echo "max_parallel_downloads=10" >> dnf_conf_path
+echo "fastestmirror=True" >> dnf_conf_path
+
 # Enable RPM Fusion repositories
 sudo dnf install -y \
     https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
@@ -25,8 +31,10 @@ sudo dnf install -y \
     sublime-text
 
 # Install flatpak based packages
-flatpak install -y \
-    flathub md.obsidian.Obsidian
+flatpak install flathub -y \
+    md.obsidian.Obsidian \
+    com.spotify.Client \
+    org.libreoffice.LibreOffice
 
 # Remove Fedora bloat
 sudo dnf remove -y \
@@ -53,9 +61,12 @@ sudo usermod -aG docker $USER
 sudo systemctl reboot
 
 # Configure sublime text settings
-cp \
-    ../editors/Preferences.sublime-settings \
+cp ../editors/Preferences.sublime-settings \
     ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
 # Add aliases to .bashrc
 /bin/bash ./set_aliases.sh
+
+# Generate ssh key
+ssh-keygen -t rsa -b 4096
+
