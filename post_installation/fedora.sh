@@ -1,10 +1,14 @@
 #!bin/bash
 
 # Speed up dnf
-dnf_conf_path='/etc/dnf/dnf.conf'
+dnf_config=/etc/dnf/dnf.conf
 
-echo "max_parallel_downloads=10" >> dnf_conf_path
-echo "fastestmirror=True" >> dnf_conf_path
+sudo chown $USER:$USER $dnf_config
+
+echo "max_parallel_downloads=10" >> $dnf_config
+echo "fastestmirror=True" >> $dnf_config
+
+sudo chown root:root $dnf_config
 
 # Enable RPM Fusion repositories
 sudo dnf install -y \
@@ -15,7 +19,6 @@ sudo dnf install -y \
 sudo dnf install -y dnf-plugins-core
 sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
-sudo dnf config-manager --set-enabled google-chrome
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 # Update dnf cache and packages
@@ -26,9 +29,11 @@ sudo dnf upgrade -y
 sudo dnf install -y \
     docker-compose \
     gnome-tweaks \
-    google-chrome-stable \
     moby-engine \
-    sublime-text
+    sublime-text \
+    neovim \
+    neofetch \
+    flameshot
 
 # Install flatpak based packages
 flatpak install flathub -y \
@@ -39,7 +44,6 @@ flatpak install flathub -y \
 # Remove Fedora bloat
 sudo dnf remove -y \
     cheese \
-    firefox \
     gnome-boxes \
     gnome-clocks \
     gnome-contacts \
@@ -58,7 +62,6 @@ flatpak remove --unused -y
 sudo systemctl enable docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
-sudo systemctl reboot
 
 # Configure sublime text settings
 cp ../editors/Preferences.sublime-settings \
@@ -73,7 +76,7 @@ ssh-keygen -t rsa -b 4096
 # Active theming :D
 cd ~ && mkdir Temas && cd Temas/
 
-git clone git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
+git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
 
 cd Whitesur-gtk-theme/
 
