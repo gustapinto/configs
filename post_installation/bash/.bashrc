@@ -1,3 +1,7 @@
+if [ -f /etc/bashrc ]; then
+    source /etc/bashrc
+fi
+
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi

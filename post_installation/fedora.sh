@@ -73,12 +73,8 @@ cp ../editors/Preferences.sublime-settings \
 # Generate ssh key
 ssh-keygen -t rsa -b 4096
 
-# Active theming :D
+# Dowload White-Sur theming :D
 cd ~ && mkdir Temas && cd Temas/
 
 git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
 
-cd Whitesur-gtk-theme/
-
-./install.sh -c dark -c light -t all -i fedora
-sudo ./tweaks.sh --gdm --flatpak
