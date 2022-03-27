@@ -28,11 +28,8 @@ sudo dnf upgrade -y
 
 # Install RPM based packages
 sudo dnf install -y \
-    containerd.io \
-    docker-ce \
-    docker-ce-cli \
+    moby-engine \
     docker-compose \
-    flameshot \
     gnome-tweaks \
     neofetch \
     neovim \
@@ -41,8 +38,7 @@ sudo dnf install -y \
 # Install flatpak based packages
 flatpak install flathub -y \
     md.obsidian.Obsidian \
-    com.spotify.Client \
-    org.libreoffice.LibreOffice
+    com.spotify.Client
 
 # Remove Fedora bloat
 sudo dnf remove -y \
@@ -53,7 +49,6 @@ sudo dnf remove -y \
     gnome-maps \
     gnome-tour \
     gnome-weather \
-    libreoffice-* \
     simple-scan \
     yelp
 
@@ -61,28 +56,14 @@ sudo dnf remove -y \
 sudo dnf autoremove -y
 flatpak remove --unused -y
 
-# Set CGroup to version 1
-sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
-
 # Enable and set docker-ce permissions
-sudo systemctl start docker
+sudo systemctl enable docker
 sudo groupadd docker
-sudo gpasswd -a ${USER} docker
-sudo systemctl restart docker
-newgrp docker
+sudo usermod -aG docker $USER
 
 # Configure sublime text settings
 cp ../editors/Preferences.sublime-settings \
     ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
-# Add aliases to .bashrc
-/bin/bash ./set_aliases.sh
-
 # Generate ssh key
 ssh-keygen -t rsa -b 4096
-
-# Dowload White-Sur theming :D
-cd ~ && mkdir Temas && cd Temas/
-
-git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-
