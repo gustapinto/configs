@@ -11,6 +11,10 @@ let g:gruvbox_contrast_dark = 'hard'
 
 colorscheme gruvbox
 
+hi Normal guibg=NONE ctermbg=NONE
+
+set colorcolumn=72,80,100,120
+
 " Git
 set updatetime=100
 
