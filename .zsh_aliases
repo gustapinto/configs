@@ -1,0 +1,8 @@
+# Git extension aliases
+alias adog="glgg"
+alias glff="gl --ff-only"
+
+# QOL aliases
+alias cl="clear"
+alias py="python"
+
