@@ -4,6 +4,3 @@ shell:
     - new-session
     - -A
     - -D
-    - -s
-    - main
-
