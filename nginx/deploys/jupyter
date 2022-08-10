@@ -1,0 +1,22 @@
+server {
+    listen [::]:443 ssl default_server; # managed by Certbot
+    listen 443 ssl default_server; # managed by Certbot
+
+    server_name jupyter.gustapinto.dev www.jupyter.gustapinto.dev;
+
+    root /home/ubuntu/Deploys/jupyter-notebooks/;
+
+    location / {
+        proxy_pass http://127.0.0.1:8888/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        proxy_read_timeout 86400;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    ssl_certificate /etc/letsencrypt/live/jupyter.gustapinto.dev/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/jupyter.gustapinto.dev/privkey.pem; # managed by Certbot
+}
+
