@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # Add external repositories
-sudo add-apt-repository ppa:mmstick76/alacritty
+sudo add-apt-repository ppa:aslatter/ppa
 
 # Install software and prerequesites
 sudo apt update && sudo apt upgrade -y
 
 sudo apt install -y \
     alacritty \
+    curl \
     docker \
     docker-compose \
     tmux \
@@ -21,6 +22,9 @@ wget "https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/
 
 # Install Oh My Zsh
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
+# Install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Configure docker
 sudo systemctl start docker
