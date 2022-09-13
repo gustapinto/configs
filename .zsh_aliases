@@ -6,3 +6,8 @@ alias glff="gl --ff-only"
 alias cl="clear"
 alias py="python"
 
+# Docker aliases
+alias dcup="docker-compose up"
+alias dcupd="dcup -d"
+alias dcexec="docker-compose exec"
+
