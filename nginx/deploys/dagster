@@ -1,0 +1,22 @@
+server {
+    listen [::]:443 ssl;
+    listen 443 ssl;
+
+    server_name dagster.gustapinto.dev www.dagster.gustapinto.dev;
+
+    root /home/ubuntu/deploys/ops_dagster/;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        proxy_read_timeout 86400;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    #ssl_certificate /etc/letsencrypt/live/dagster.gustapinto.dev/fullchain.pem;
+    #ssl_certificate_key /etc/letsencrypt/live/dagster.gustapinto.dev/privkey.pem;
+}
+
