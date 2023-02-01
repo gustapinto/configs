@@ -5,7 +5,7 @@ sudo apt install -y software-properties-common
 sudo add-apt-repository -y ppa:philip.scott/pantheon-tweaks
 
 # Install software and prerequesites
-sudo apt update && sudo apt upgrade -y
+sudo apt update
 
 sudo apt install -y \
     curl \
