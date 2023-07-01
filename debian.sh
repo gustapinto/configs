@@ -17,7 +17,8 @@ sudo apt update && sudo apt install -y \
     wget \
     gnome-calendar \
     fonts-liberation \
-    libu2f-udev
+    libu2f-udev \
+    python3-pip
 
 # Install external installer based software
 wget "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" -O /tmp/vscode.deb && \
